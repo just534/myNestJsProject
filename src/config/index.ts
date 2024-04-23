@@ -1,20 +1,39 @@
-import type { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { JwtModuleOptions } from '@nestjs/jwt';
+// config.ts
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
-export const typeOrmConfig: TypeOrmModuleOptions = {
-  type: 'mssql', // Change database type to 'mssql'
-  host: '192.168.48.128', // Host, adjust if necessary
-  port: 1433, // Default SQL Server port
-  username: 'sa', // Typical default username for SQL Server
-  password: 'Dmz081027', // Adjust password as necessary
-  database: 'LtSystemManageDataSource', // Specify the database name
-  entities: ['dist/**/*.entity{.ts,.js}'], // Entities path
-  autoLoadEntities: true, // Auto-load entities
-  options: {
-    encrypt: true, // Required if connecting to SQL Server on Azure
-    trustServerCertificate: true,
-  },
-};
+@Injectable()
+export class TypeOrmConfigService implements TypeOrmOptionsFactory {
+  constructor(private configService: ConfigService) {
+    // 示例配置检查
+console.log({
+  host: this.configService.get<string>('DB_HOST'),
+  port: this.configService.get<number>('DB_PORT'),
+  username: this.configService.get<string>('DB_USERNAME'),
+  password: this.configService.get<string>('DB_PASSWORD'),
+  database: this.configService.get<string>('DB_NAME'),
+}); 
+  }
+
+  createTypeOrmOptions(): TypeOrmModuleOptions {
+    return {
+      type: 'mssql',
+      host: this.configService.get<string>('DB_HOST'),
+      port: parseInt(this.configService.get<string>('DB_PORT')),
+      username: this.configService.get<string>('DB_USERNAME'),
+      password: this.configService.get<string>('DB_PASSWORD'),
+      database: this.configService.get<string>('DB_NAME'),
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      autoLoadEntities: true,
+      options: {
+        encrypt: true,
+        trustServerCertificate: true,
+      },
+    };
+  }
+}
 
 // config.ts
 export const jwtConfig: JwtModuleOptions = {
