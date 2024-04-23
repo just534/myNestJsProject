@@ -37,7 +37,7 @@ console.log({
 
 // config.ts
 export const jwtConfig: JwtModuleOptions = {
-  secret: 'xdclass.net',
+  secret: 'abcdefghabcdefghabcdefghabcdefgh',
   signOptions: { expiresIn: '7d' },
   global: true,
 };

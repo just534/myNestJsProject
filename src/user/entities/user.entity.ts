@@ -3,13 +3,8 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('Users')
 export class User {
   @PrimaryGeneratedColumn()
-  Identify: number;
+  _Identify: number;
 
-  @Column({ type: 'bit' })
-  Locked: boolean;
-
-  @Column({ type: 'decimal', precision: 28, scale: 14 })
-  SortKey: number;
 
   @Column({ type: 'nvarchar', length: 80 })
   userid: string;
