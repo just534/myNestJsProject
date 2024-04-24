@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
@@ -10,6 +11,6 @@ import { PasswordService } from 'src/auth/password/password.service';
 @Module({
   imports: [JwtModule.register(jwtConfig), TypeOrmModule.forFeature([User])],
   controllers: [UserController],
-  providers: [UserService, SecretTool, JwtDecrypTool,PasswordService],
+  providers: [UserService, SecretTool, JwtDecrypTool, PasswordService],
 })
-export class UserModule {}
+export class UserModule { }

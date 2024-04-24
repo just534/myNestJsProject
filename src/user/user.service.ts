@@ -1,18 +1,17 @@
+/* eslint-disable prettier/prettier */
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { RegisterUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { SecretTool } from '../utils/InternalTools';
 import { PasswordService } from 'src/auth/password/password.service';
 import { JwtService } from '@nestjs/jwt';
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly secretTool: SecretTool,
     private readonly jwtService: JwtService,
-    private readonly passwordservice:PasswordService,
+    private readonly passwordservice: PasswordService,
   ) { }
   async register({ userid, pcpwd }: RegisterUserDto) {
     // 查找用户是否注册过
@@ -25,7 +24,7 @@ export class UserService {
     // 插入一条用户数据
     const user = await this.userRepository.save({
       userid,
-      pcpwd: this.secretTool.getSecret(pcpwd),
+      pcpwd: await this.passwordservice.hashPassword(pcpwd),
     });
 
     return {
@@ -42,9 +41,9 @@ export class UserService {
       throw new BadRequestException('账号或密码错误！');
     }
     // 检查密码是否正确
-    
-    const isPasswordValid =await this.passwordservice.comparePasswords(pcpwd,foundUser.pcpwd)
-      // this.secretTool.getSecret(pcpwd) === foundUser.pcpwd;
+
+    const isPasswordValid = await this.passwordservice.comparePasswords(pcpwd, foundUser.pcpwd)
+    // this.secretTool.getSecret(pcpwd) === foundUser.pcpwd;
     if (!isPasswordValid) {
       throw new BadRequestException('账号或密码错误！');
     }

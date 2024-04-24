@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -10,7 +11,10 @@ export class PasswordService {
   }
 
   // 验证密码
-  async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {
+  async comparePasswords(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword);
   }
 }

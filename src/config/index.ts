@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { JwtModuleOptions } from '@nestjs/jwt';
 // config.ts
 import { Injectable } from '@nestjs/common';
@@ -8,13 +9,13 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService) {
     // 示例配置检查
-console.log({
-  host: this.configService.get<string>('DB_HOST'),
-  port: this.configService.get<number>('DB_PORT'),
-  username: this.configService.get<string>('DB_USERNAME'),
-  password: this.configService.get<string>('DB_PASSWORD'),
-  database: this.configService.get<string>('DB_NAME'),
-}); 
+    console.log({
+      host: this.configService.get<string>('DB_HOST'),
+      port: this.configService.get<number>('DB_PORT'),
+      username: this.configService.get<string>('DB_USERNAME'),
+      password: this.configService.get<string>('DB_PASSWORD'),
+      database: this.configService.get<string>('DB_NAME'),
+    });
   }
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
@@ -28,7 +29,7 @@ console.log({
       entities: ['dist/**/*.entity{.ts,.js}'],
       autoLoadEntities: true,
       options: {
-        encrypt: true,
+        encrypt: false,
         trustServerCertificate: true,
       },
     };

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -7,7 +8,7 @@ export class JwtUtils {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService
-  ) {}
+  ) { }
 
   // 生成JWT
   generateToken(username: string): string {

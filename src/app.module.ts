@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { UserModule } from './user/user.module';
 import { CourseModule } from './course/course.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './config';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -28,4 +29,4 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
